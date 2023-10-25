@@ -1,2 +1,2 @@
 # Move-Ax
-Move Ax Game
+MOVEAX Game
