@@ -12,8 +12,7 @@ public class Node : MonoBehaviour
     public GameObject node;
 
     public GameObject syncObject;
-    private Sync sync;
-
+    [SerializeField] Sync sync;
     public bool activated = false;
     public bool blocked = true;
     public bool ml_Read = false;
