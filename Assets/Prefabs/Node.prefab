@@ -373,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   node: {fileID: 978836020932131067}
   syncObject: {fileID: 3225738897274318346, guid: d04bc7d2ce5b5ff4ca07df16550c129a, type: 3}
+  sync: {fileID: 0}
   activated: 0
   blocked: 1
   ml_Read: 0
@@ -405,7 +406,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978836020932131067}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
