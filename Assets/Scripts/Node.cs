@@ -26,8 +26,11 @@ public class Node : MonoBehaviour
     Color color_standby;
     Color color_blocked;
 
-    public AudioClip din;
-    public AudioSource audioObject;
+    //public AudioClip din;
+    //public AudioSource audioObject;
+
+
+    public int strengthCode = 50;
 
 
     private void OnMouseDown()
@@ -35,11 +38,10 @@ public class Node : MonoBehaviour
         GetComponent<SpriteRenderer>().color = color_activated;
         
         if (blocked == false)
-        {
-            
+        {          
             FindNearestSync();
             blocked = true;
-            audioObject.PlayOneShot(din);
+            //audioObject.PlayOneShot(din);
         }
         firewallPoints();
 
@@ -153,9 +155,12 @@ public class Node : MonoBehaviour
     {
         if (gameObject.tag == "firewall")
         {
-            Transform frwlChild = transform.GetChild(0);
-            frwlChild.gameObject.SetActive(true);
-            
+            //Transform frwlChild = transform.GetChild(0);
+            //frwlChild.gameObject.SetActive(true);
+
+            gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+
+
         }
     }
 
