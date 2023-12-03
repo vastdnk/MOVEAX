@@ -49,7 +49,7 @@ public class Node : MonoBehaviour
 
     void Start()
     {
-        UnityEngine.ColorUtility.TryParseHtmlString("#FF4545", out color_activated);
+        UnityEngine.ColorUtility.TryParseHtmlString("#FFFFFF", out color_activated);
         UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_standby);
         UnityEngine.ColorUtility.TryParseHtmlString("#4200FF", out color_blocked);
 
@@ -158,7 +158,7 @@ public class Node : MonoBehaviour
             //Transform frwlChild = transform.GetChild(0);
             //frwlChild.gameObject.SetActive(true);
 
-            gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
 
 
         }
