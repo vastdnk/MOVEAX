@@ -43,6 +43,7 @@ public class Node : MonoBehaviour
             blocked = true;
             //audioObject.PlayOneShot(din);
         }
+
         firewallPoints();
 
     }
@@ -82,6 +83,11 @@ public class Node : MonoBehaviour
             {
                 item.GetComponent<SpriteRenderer>().color = Color.red;
             }
+
+            //if (tag == "start")
+            //{
+            //    item.GetComponent<SpriteRenderer>().color = Color.red;
+            //}
         }
         foreach (var item in nearestObjects)
         {
