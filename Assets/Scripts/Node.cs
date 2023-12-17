@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 //using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 
 public class Node : MonoBehaviour
@@ -15,7 +16,10 @@ public class Node : MonoBehaviour
     [SerializeField] Sync sync;
     public bool activated = false;
     public bool blocked = true;
+    public bool preReady = false;
     public bool ml_Read = false;
+
+    public Animator animator;
 
 
     public GameObject[] nearestObjects;
@@ -25,6 +29,7 @@ public class Node : MonoBehaviour
     Color color_activated;
     Color color_standby;
     Color color_blocked;
+    Color color_sync;
 
     //public AudioClip din;
     //public AudioSource audioObject;
@@ -36,7 +41,9 @@ public class Node : MonoBehaviour
     private void OnMouseDown()
     {
         GetComponent<SpriteRenderer>().color = color_activated;
-        
+        animator.SetBool("Selected", true);
+
+
         if (blocked == false)
         {          
             FindNearestSync();
@@ -50,9 +57,10 @@ public class Node : MonoBehaviour
 
     void Start()
     {
-        UnityEngine.ColorUtility.TryParseHtmlString("#FFFFFF", out color_activated);
+        UnityEngine.ColorUtility.TryParseHtmlString("#6D221A", out color_activated);
+        UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_sync);
         UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_standby);
-        UnityEngine.ColorUtility.TryParseHtmlString("#4200FF", out color_blocked);
+        UnityEngine.ColorUtility.TryParseHtmlString("#092b37", out color_blocked);
 
         gameObject.GetComponent<SpriteRenderer>().color = color_standby;
 
@@ -75,15 +83,20 @@ public class Node : MonoBehaviour
         }        
     }
 
+    public void Back(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     void FindNearestSync() 
     {
         foreach (var item in nearestObjects)
         {
             if (item.GetComponent<SpriteRenderer>().color == Color.white)
             {
-                item.GetComponent<SpriteRenderer>().color = Color.red;
+                item.GetComponent<SpriteRenderer>().color = color_activated;
             }
-
+            
             //if (tag == "start")
             //{
             //    item.GetComponent<SpriteRenderer>().color = Color.red;
@@ -94,7 +107,7 @@ public class Node : MonoBehaviour
 
             if (gameObject.tag != "firewall")
             {
-                if (item.GetComponent<SpriteRenderer>().color != Color.white & item.GetComponent<SpriteRenderer>().color != Color.red)
+                if (item.GetComponent<SpriteRenderer>().color != Color.white & item.GetComponent<SpriteRenderer>().color != color_activated)
                 {
                     item.GetComponent<SpriteRenderer>().color = Color.white;
                     item.tag = "Sync";
@@ -121,10 +134,12 @@ public class Node : MonoBehaviour
     {
         foreach (var item in nearestObjects)
         {
-            if (item.tag == "Sync")
+            if (item.tag == "Sync" & gameObject.tag != "blockedNode")
             {
                 gameObject.GetComponent<CircleCollider2D>().enabled = true;
                 gameObject.GetComponent<Node>().blocked = false;
+                gameObject.GetComponent<Node>().preReady = true;
+                animator.SetBool("Nears", true);
             }
             
             if (item.tag == "tempDesync")
@@ -144,12 +159,19 @@ public class Node : MonoBehaviour
         if (gameObject.tag == "blockedNode")
         {
             gameObject.GetComponent<Node>().blocked = true;
-            gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            gameObject.GetComponent<CircleCollider2D>().enabled = false; 
+            gameObject.GetComponent<SpriteRenderer>().color = color_blocked;
 
             foreach (var item in nearestObjects)
             {
-                item.GetComponent<SpriteRenderer>().color = Color.gray;
+                item.GetComponent<SpriteRenderer>().color = color_blocked;
             }
+        }
+
+
+        if (preReady == true)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         }
 
 

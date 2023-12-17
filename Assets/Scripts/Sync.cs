@@ -30,14 +30,14 @@ public class Sync : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (tag == "Sync")
-        {
-            animator.SetBool("Activated", true);
-            if (gameObject.GetComponent<SpriteRenderer>().color != color_activated)
-            {
-                gameObject.GetComponent<SpriteRenderer>().color = color_activated;
-            }
-        }
+        //if (tag == "Sync")
+        //{
+        //    animator.SetBool("Activated", true);
+        //    if (gameObject.GetComponent<SpriteRenderer>().color != color_activated)
+        //    {
+        //        gameObject.GetComponent<SpriteRenderer>().color = color_activated;
+        //    }
+        //}
         
     }
 }
