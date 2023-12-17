@@ -13,6 +13,10 @@ public class Node : MonoBehaviour
     public GameObject node;
 
     public GameObject syncObject;
+
+    
+
+
     [SerializeField] Sync sync;
     public bool activated = false;
     public bool blocked = true;
@@ -20,7 +24,7 @@ public class Node : MonoBehaviour
     public bool ml_Read = false;
 
     public Animator animator;
-
+    
 
     public GameObject[] nearestObjects;
     public LayerMask m_LayerMask;
@@ -53,13 +57,14 @@ public class Node : MonoBehaviour
         }
 
         firewallPoints();
+        
 
     }
 
     void Start()
     {
-
         Chance();
+
 
         UnityEngine.ColorUtility.TryParseHtmlString("#6D221A", out color_activated);
         UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_sync);
@@ -190,9 +195,7 @@ public class Node : MonoBehaviour
         {
             //Transform frwlChild = transform.GetChild(0);
             //frwlChild.gameObject.SetActive(true);
-
-            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
         }
     }
@@ -202,11 +205,9 @@ public class Node : MonoBehaviour
 
     void Chance()
     {
-        digit = Random.Range(0, 101);
-        if (digit <= 35)
-        {
-            gameObject.tag = "firewall";
-        }
+        
+
+
     }
 
 

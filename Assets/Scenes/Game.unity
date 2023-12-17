@@ -4814,6 +4814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
+  - component: {fileID: 519420034}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
   m_Layer: 0
@@ -4985,6 +4986,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5413aec3333fa834eab0242fc235584a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &521520030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3225738897274318340, guid: d04bc7d2ce5b5ff4ca07df16550c129a, type: 3}
@@ -5462,7 +5475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 978836020932131067, guid: f8b330877163e084aba6fdfb347b0ad7, type: 3}
       propertyPath: m_TagString
-      value: firewall
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 978836020932131067, guid: f8b330877163e084aba6fdfb347b0ad7, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9255,7 +9268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 978836020932131067, guid: f8b330877163e084aba6fdfb347b0ad7, type: 3}
       propertyPath: m_TagString
-      value: firewall
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8b330877163e084aba6fdfb347b0ad7, type: 3}
@@ -15147,7 +15160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 978836020932131067, guid: f8b330877163e084aba6fdfb347b0ad7, type: 3}
       propertyPath: m_TagString
-      value: firewall
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8b330877163e084aba6fdfb347b0ad7, type: 3}

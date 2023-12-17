@@ -11,6 +11,8 @@ TagManager:
   - blockedNode
   - standardSync
   - start
+  - Node
+  - core
   layers:
   - Default
   - TransparentFX
