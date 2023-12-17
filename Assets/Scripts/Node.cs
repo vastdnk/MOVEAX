@@ -161,6 +161,7 @@ public class Node : MonoBehaviour
             gameObject.GetComponent<Node>().blocked = true;
             gameObject.GetComponent<CircleCollider2D>().enabled = false; 
             gameObject.GetComponent<SpriteRenderer>().color = color_blocked;
+            gameObject.GetComponent<Node>().preReady = false;
 
             foreach (var item in nearestObjects)
             {
