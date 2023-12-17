@@ -36,6 +36,7 @@ public class Node : MonoBehaviour
 
 
     public int strengthCode = 50;
+    int digit;
 
 
     private void OnMouseDown()
@@ -57,6 +58,9 @@ public class Node : MonoBehaviour
 
     void Start()
     {
+
+        Chance();
+
         UnityEngine.ColorUtility.TryParseHtmlString("#6D221A", out color_activated);
         UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_sync);
         UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_standby);
@@ -192,6 +196,22 @@ public class Node : MonoBehaviour
 
         }
     }
+
+
+
+
+    void Chance()
+    {
+        digit = Random.Range(0, 101);
+        if (digit <= 35)
+        {
+            gameObject.tag = "firewall";
+        }
+    }
+
+
+
+
 
 
 
