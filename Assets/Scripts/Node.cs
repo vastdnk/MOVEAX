@@ -11,7 +11,6 @@ public class Node : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject node;
-
     public GameObject syncObject;
 
     
@@ -20,20 +19,31 @@ public class Node : MonoBehaviour
     [SerializeField] Sync sync;
     public bool activated = false;
     public bool blocked = true;
-    public bool preReady = false;
-    public bool ml_Read = false;
 
-    public Animator animator;
+    public bool nearStartNode;             // для того, чтобы не супрессор не прокал сразу на стартовых нодах
+    public bool preReady = false;
     
 
+    public Animator animator;
+
+    [Header("Enemies")]
+    [SerializeField] bool antivirus;
+    [SerializeField] bool supressor;
+    [SerializeField] bool restoration;
+    [SerializeField] bool firewall;
+
+
     public GameObject[] nearestObjects;
-    public LayerMask m_LayerMask;
+    //public LayerMask m_LayerMask;
 
 
     Color color_activated;
     Color color_standby;
     Color color_blocked;
     Color color_sync;
+
+    Color color_sync_preready;
+
 
     //public AudioClip din;
     //public AudioSource audioObject;
@@ -46,7 +56,15 @@ public class Node : MonoBehaviour
     private void OnMouseDown()
     {
         GetComponent<SpriteRenderer>().color = color_activated;
-        animator.SetBool("Selected", true);
+
+
+        if (tag != "enemy")
+        {
+            animator.SetBool("Selected", true);
+        } else
+        {
+            enemyPoints();
+        }
 
 
         if (blocked == false)
@@ -54,22 +72,22 @@ public class Node : MonoBehaviour
             FindNearestSync();
             blocked = true;
             //audioObject.PlayOneShot(din);
+            //GetComponent<SpriteRenderer>().color = Color.gray;
         }
 
-        firewallPoints();
-        
+
+
 
     }
-
+    
     void Start()
     {
-        Chance();
-
-
-        UnityEngine.ColorUtility.TryParseHtmlString("#6D221A", out color_activated);
+        UnityEngine.ColorUtility.TryParseHtmlString("#6D221A", out color_activated);         //стандартный красный проходной
         UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_sync);
         UnityEngine.ColorUtility.TryParseHtmlString("#4D4D4D", out color_standby);
-        UnityEngine.ColorUtility.TryParseHtmlString("#092b37", out color_blocked);
+        UnityEngine.ColorUtility.TryParseHtmlString("#092b37", out color_blocked);           //заблокировано возле фаерволла
+        UnityEngine.ColorUtility.TryParseHtmlString("#00E5DD", out color_sync_preready);     //подготовлен к активации
+
 
         gameObject.GetComponent<SpriteRenderer>().color = color_standby;
 
@@ -77,8 +95,7 @@ public class Node : MonoBehaviour
         foreach (var nearObj in hitColliders)
         {
             nearestObjects = nearestObjects.Append(nearObj.gameObject).ToArray();
-            //nearObj.GetComponent<CircleCollider2D>().enabled = true;
-            
+            //nearObj.GetComponent<CircleCollider2D>().enabled = true;      
         }
 
 
@@ -89,52 +106,51 @@ public class Node : MonoBehaviour
         if (blocked == true)
         {
             GetComponent<CircleCollider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().color = Color.gray;
         }        
     }
 
-    public void Back(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
+    
 
     void FindNearestSync() 
     {
         foreach (var item in nearestObjects)
         {
-            if (item.GetComponent<SpriteRenderer>().color == Color.white)
+            if (item.GetComponent<SpriteRenderer>().color == color_sync_preready) // если подготовлено, окрашивается в красный
             {
                 item.GetComponent<SpriteRenderer>().color = color_activated;
             }
             
-            //if (tag == "start")
-            //{
-            //    item.GetComponent<SpriteRenderer>().color = Color.red;
-            //}
+           
         }
         foreach (var item in nearestObjects)
         {
 
-            if (gameObject.tag != "firewall")
+            if (gameObject.tag != "enemy")
             {
-                if (item.GetComponent<SpriteRenderer>().color != Color.white & item.GetComponent<SpriteRenderer>().color != color_activated)
+                if (item.GetComponent<SpriteRenderer>().color != color_sync_preready & item.GetComponent<SpriteRenderer>().color != color_activated)
                 {
-                    item.GetComponent<SpriteRenderer>().color = Color.white;
+                    item.GetComponent<SpriteRenderer>().color = color_sync_preready;
                     item.tag = "Sync";
                 }
-                Debug.Log(nearestObjects.Length);
+                //Debug.Log(nearestObjects.Length);
             } else
             {
                 if (item.tag != "Sync")
+                //if (item.tag == "Sync")
                 {
                     item.tag = "tempDesync";
-                    item.GetComponent<SpriteRenderer>().color = Color.black;
+                    item.GetComponent<SpriteRenderer>().color = color_blocked;
                 }
+                else
+                {
+                    item.GetComponent<SpriteRenderer>().color = color_blocked;
+                }
+                
                 
             }
                   
         }
-
-
 
         gameObject.GetComponent<Node>().activated = true;
 
@@ -143,20 +159,27 @@ public class Node : MonoBehaviour
     {
         foreach (var item in nearestObjects)
         {
-            if (item.tag == "Sync" & gameObject.tag != "blockedNode")
+            if (item.tag == "Sync" & gameObject.tag != "blockedNode") //включает с анимацией и подготавливает ближайшие ноды к активации
             {
                 gameObject.GetComponent<CircleCollider2D>().enabled = true;
                 gameObject.GetComponent<Node>().blocked = false;
                 gameObject.GetComponent<Node>().preReady = true;
                 animator.SetBool("Nears", true);
             }
-            
-            if (item.tag == "tempDesync")
+
+
+            if (item.tag == "tempDesync") // затрагивает ноду, связанную с ветками tempDesync
             {
                 gameObject.GetComponent<Node>().blocked = true;
                 gameObject.GetComponent<CircleCollider2D>().enabled = false;
-                gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
-                gameObject.tag = "blockedNode";                
+                
+
+                if (gameObject.tag != "enemy")
+                {
+                    gameObject.tag = "blockedNode";
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+                }
+                               
             }
             
         }
@@ -169,7 +192,7 @@ public class Node : MonoBehaviour
         {
             gameObject.GetComponent<Node>().blocked = true;
             gameObject.GetComponent<CircleCollider2D>().enabled = false; 
-            gameObject.GetComponent<SpriteRenderer>().color = color_blocked;
+            //gameObject.GetComponent<SpriteRenderer>().color = color_blocked; //
             gameObject.GetComponent<Node>().preReady = false;
 
             foreach (var item in nearestObjects)
@@ -178,41 +201,24 @@ public class Node : MonoBehaviour
             }
         }
 
-
         if (preReady == true)
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         }
-
-
     }
 
 
 
-    void firewallPoints()
-    {
-        if (gameObject.tag == "firewall")
-        {
-            //Transform frwlChild = transform.GetChild(0);
-            //frwlChild.gameObject.SetActive(true);
-            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
+
+    void enemyPoints()
+    {
+        if (gameObject.tag == "enemy")
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            animator.SetBool("Firewall", true);
         }
     }
-
-
-
-
-    void Chance()
-    {
-        
-
-
-    }
-
-
-
-
 
 
 
@@ -220,6 +226,7 @@ public class Node : MonoBehaviour
     void Update() 
     {
         MyCollisions();
+
     }
 
     

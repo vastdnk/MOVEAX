@@ -13,6 +13,7 @@ TagManager:
   - start
   - Node
   - core
+  - enemy
   layers:
   - Default
   - TransparentFX

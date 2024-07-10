@@ -347,7 +347,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -241795390, guid: c5eb8e4396c52be489a171f531c339fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fa6f932062995044a93f0828a0985f05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -375,13 +375,14 @@ MonoBehaviour:
   sync: {fileID: 0}
   activated: 0
   blocked: 1
+  nearStartNode: 0
   preReady: 0
-  ml_Read: 0
   animator: {fileID: 3244170178830248061}
+  antivirus: 0
+  supressor: 0
+  restoration: 0
+  firewall: 0
   nearestObjects: []
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 0
   strengthCode: 50
 --- !u!58 &-7724717265314195420
 CircleCollider2D:
