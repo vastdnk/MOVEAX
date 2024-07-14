@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-//using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 
 public class Node : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject node;
     public GameObject syncObject;
 
@@ -34,7 +32,6 @@ public class Node : MonoBehaviour
 
 
     public GameObject[] nearestObjects;
-    //public LayerMask m_LayerMask;
 
 
     Color color_activated;
